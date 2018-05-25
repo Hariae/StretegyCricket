@@ -1,0 +1,130 @@
+﻿@using StrategyCricket.Models.ViewModels
+@using StategyCricket.DataAccess;
+@model TeamSelectionViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Team Selection</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+    <script type="text/javascript">
+        $(function () {
+            $('.listbox').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+    </script>
+    <style>
+        .custom-listbox{
+            width:250px;
+            height: 250px !important;                       
+        }
+        select option {               
+            padding-bottom: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: cursive;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Example Page Header</h1>
+    </div>
+
+
+@if(Model.Teams != null)
+{
+
+
+   using (Html.BeginForm("TeamSelectionGetPlayers", "Game", FormMethod.Post))
+   {
+
+   
+    <div>
+        <div style="float:left;width:50%;background-color:antiquewhite">
+            
+
+                @Html.DropDownListFor(x=> x.FirstTeam, Model.Teams.Select(x => new SelectListItem(){Text = x.Team1.ToString()}), "Select a team");
+            
+        </div>
+
+        <div>
+            
+            @Html.DropDownListFor(x => x.SecondTeam, Model.Teams.Select(x => new SelectListItem() { Text = x.Team1.ToString() }), "Select a team");
+           
+
+        </div>
+        <button type="submit"> Submit</button>
+    </div>
+
+   }
+}
+
+    @if (Model.FirstTeamPlayers != null || Model.SecondTeamPlayers != null)
+    {
+        <div>
+        @using (Html.BeginForm("SaveTeamPlayers", "Game", FormMethod.Post))
+        {
+            <div style="float:left;width:50%;background-color:antiquewhite">
+               
+                    
+                    @Html.Label("Players:");
+                    <br />
+                    <br />
+                    @Html.ListBoxFor(m => m.FirstTeamSelectedPlayers, Model.FirstTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = true }), new { @class = "listbox custom-listbox" })
+                    <br /> 
+                
+                    <div>                       
+                        @for (int i = 0; i < 20; i++)
+                        {
+                            @Html.Label("Over:" + (i+1));
+                            <br />
+                            <br />
+                            @Html.ListBoxFor(m => m.FirstTeamBowlingLineup, Model.FirstTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), new { @class = "custom-listbox" })
+                            <br />
+                        }
+                        
+                    </div>
+                                                   
+            </div>
+
+            <div style="background-color:antiquewhite">                                  
+                    @Html.Label("Players:");
+                    <br />
+                    <br />
+                    @Html.ListBoxFor(m => m.SecondTeamSelectedPlayers, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = true }), new { @class = "listbox custom-listbox" })
+                    <br />
+                    
+                <div>
+                    @for (int j = 0; j < 20; j++)
+                    {
+                        @Html.Label("Over:" + (j + 1));
+                        <br />
+                        <br />
+                        @Html.ListBoxFor(m => m.SecondTeamBowlingLineup, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), new { @class = "custom-listbox" })
+                        <br />
+                    }
+                </div>
+                                                  
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" class="btn btn-primary" value="Submit" />
+            </div>
+        }
+        </div>
+
+    }
+   
+</body>
+
+
+</html>

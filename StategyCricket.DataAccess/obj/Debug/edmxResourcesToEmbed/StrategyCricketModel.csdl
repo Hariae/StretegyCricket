@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StrategyCricketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Player">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BattingAttribute" Type="Int32" Nullable="false" />
+    <Property Name="BowlingAttribute" Type="Int32" Nullable="false" />
+    <Property Name="Team" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Team">
+    <Key>
+      <PropertyRef Name="TeamId" />
+    </Key>
+    <Property Name="TeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Team1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="StrategyCricketEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Players" EntityType="Self.Player" />
+    <EntitySet Name="Teams" EntityType="Self.Team" />
+    <EntitySet Name="PlayersDatas" EntityType="StrategyCricketModel.PlayersData" />
+  </EntityContainer>
+  <EntityType Name="PlayersData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Runs" Type="Int32" />
+    <Property Name="BallsFaced" Type="Int32" />
+    <Property Name="Wickets" Type="Int32" />
+    <Property Name="Overs" Type="Int32" />
+    <Property Name="HighestScore" Type="Int32" />
+    <Property Name="BestBowling" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MatchesBatted" Type="Int32" />
+    <Property Name="MatchesBowled" Type="Int32" />
+  </EntityType>
+</Schema>

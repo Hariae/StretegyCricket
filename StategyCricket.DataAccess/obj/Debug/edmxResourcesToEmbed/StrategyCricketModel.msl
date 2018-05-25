@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StrategyCricketModelStoreContainer" CdmEntityContainer="StrategyCricketEntities">
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="StrategyCricketModel.Player">
+        <MappingFragment StoreEntitySet="Player">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BattingAttribute" ColumnName="BattingAttribute" />
+          <ScalarProperty Name="BowlingAttribute" ColumnName="BowlingAttribute" />
+          <ScalarProperty Name="Team" ColumnName="Team" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="StrategyCricketModel.Team">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Team1" ColumnName="Team" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlayersDatas">
+      <EntityTypeMapping TypeName="StrategyCricketModel.PlayersData">
+        <MappingFragment StoreEntitySet="PlayersData">
+          <ScalarProperty Name="MatchesBowled" ColumnName="MatchesBowled" />
+          <ScalarProperty Name="MatchesBatted" ColumnName="MatchesBatted" />
+          <ScalarProperty Name="BestBowling" ColumnName="BestBowling" />
+          <ScalarProperty Name="HighestScore" ColumnName="HighestScore" />
+          <ScalarProperty Name="Overs" ColumnName="Overs" />
+          <ScalarProperty Name="Wickets" ColumnName="Wickets" />
+          <ScalarProperty Name="BallsFaced" ColumnName="BallsFaced" />
+          <ScalarProperty Name="Runs" ColumnName="Runs" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

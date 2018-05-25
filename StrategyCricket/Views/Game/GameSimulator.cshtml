@@ -1,0 +1,257 @@
+﻿@using StrategyCricket.Controllers;
+@using StrategyCricket.Models;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GameSimulator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+    <style>
+        table {
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+            }   
+        .pad-lt-15{
+            padding-left:15px;
+        }       
+    </style>
+</head>
+
+
+<body>
+    <div class="alert alert-dismissable" style="text-align:center;font-size:x-large"><b>CSK VS MI</b></div>
+    <div class="alert alert-warning"><b>CSK have won the toss and elected to BAT</b></div>
+    <div>
+        @{
+            int sum = 0, wickets = 0, boundaries = 0, sixes = 0, strikerIndex = 0, nonStrikerIndex = 1, overNumber = 0;
+            string currentBowler = ((GameController)this.ViewContext.Controller).getCurrentBowler(overNumber, (GameModel)ViewBag.firstInningsGameModel);
+
+            int Ballcounter = 1;
+            foreach (int i in ViewBag.firstInningsResult)
+            {
+
+                if (i != -1)
+                {
+                    if (i == 4 || i == 6)
+                    {
+                        <div class="alert alert-success">Over: @(Ballcounter / 6).@(Ballcounter % 6). @ViewBag.firstInningsBattingTeam.Players[strikerIndex].Name faces @currentBowler . @i Runs Scored</div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">Over: @(Ballcounter / 6).@(Ballcounter % 6). @ViewBag.firstInningsBattingTeam.Players[strikerIndex].Name faces @currentBowler . @i Runs Scored</div>
+                    }
+
+
+                    sum = sum + i;
+                }
+
+                if (i == 4)
+                {
+                    boundaries++;
+                }
+                if (i == 6)
+                {
+                    sixes++;
+                }
+
+                if (i == -1)
+                {
+                    // ViewBag.firstInningsBatsmenScore[wickets] = batsmanScore;
+                    <div class="alert alert-danger">Over: @(Ballcounter / 6).@(Ballcounter % 6) . @ViewBag.firstInningsBattingTeam.Players[strikerIndex].Name faces @currentBowler  . WICKET!!!. @ViewBag.firstInningsBattingTeam.Players[strikerIndex].Name scored @ViewBag.firstInningsBatsmenScore[strikerIndex].score runs</div>
+                    wickets++;
+                    if (wickets <= 9)
+                    {
+                        strikerIndex = wickets + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (i == 1 || i == 3)
+                {
+                    int temp = strikerIndex;
+                    strikerIndex = nonStrikerIndex;
+                    nonStrikerIndex = temp;
+                }
+
+                if (Ballcounter % 6 == 0)
+                {
+                    int tempBallcounter = strikerIndex;
+                    strikerIndex = nonStrikerIndex;
+                    nonStrikerIndex = tempBallcounter;
+
+                    overNumber = (Ballcounter / 6);
+                    currentBowler = ((GameController)this.ViewContext.Controller).getCurrentBowler(overNumber, (GameModel)ViewBag.firstInningsGameModel);
+                }
+                Ballcounter++;
+
+            }            
+            
+            <br />
+            <table class="alert alert-warning">
+                <tr>
+                    <th class="pad-lt-15">Batsman</th>
+                    <th>Score</th>
+                </tr>
+                @for (int k = 0; k < @ViewBag.firstInningsBatsmenScore.Length && k <= (wickets + 1); k++)
+                {
+                    <tr> <td class="pad-lt-15">@ViewBag.firstInningsBattingTeam.Players[k].Name </td> <td>@ViewBag.firstInningsBatsmenScore[k].score (@ViewBag.firstInningsBatsmenScore[k].balls)</td></tr>
+                }
+
+                <tr><td class="pad-lt-15">Total:</td> <td><p style="font-size:large"><b>@sum/@wickets</b></p></td></tr>
+                <tr><td class="pad-lt-15">Fours: </td> <td>@boundaries</td></tr>
+                <tr><td class="pad-lt-15">Sixes: </td> <td>@sixes </td></tr>
+            </table>
+
+            <br /><br />
+            <table class="alert alert-warning">
+                <tr>
+                    <th class="pad-lt-15">Bowler</th>
+                    <th>Figures</th>
+                </tr>
+               @for (int z = 0; z < @ViewBag.firstInningsBowlerScore.Length; z++)
+                {
+                    if (@ViewBag.firstInningsBowlerScore[z].runs > 0)
+                    {
+                    <tr> <td class="pad-lt-15">@ViewBag.firstInningsBowlerScore[z].Name </td> <td>@ViewBag.firstInningsBowlerScore[z].Overs - @ViewBag.firstInningsBowlerScore[z].runs - @ViewBag.firstInningsBowlerScore[z].wickets</td></tr>
+                    }
+                }
+            </table>
+        }
+</div>
+
+<br />
+
+    <div class="alert alert-warning"><b>MI face a target of @sum. The Second Innings begins</b></div>
+    <div>
+        @{
+            sum = 0; wickets = 0; boundaries = 0; sixes = 0; strikerIndex = 0; nonStrikerIndex = 1; overNumber = 0;
+            currentBowler = ((GameController)this.ViewContext.Controller).getCurrentBowler(overNumber, (GameModel)ViewBag.secondInningsGameModel);
+
+            Ballcounter = 1;
+            foreach (int i in ViewBag.secondInningsResult)
+            {
+
+                if (i != -1)
+                {
+                    if (i == 4 || i == 6)
+                    {
+                        <div class="alert alert-success"> Over: @(Ballcounter / 6).@(Ballcounter % 6). @ViewBag.secondInningsBattingTeam.Players[strikerIndex].Name faces @currentBowler . @i Runs Scored</div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info"> Over: @(Ballcounter / 6).@(Ballcounter % 6). @ViewBag.secondInningsBattingTeam.Players[strikerIndex].Name faces @currentBowler . @i Runs Scored</div>
+                    }
+
+
+                    sum = sum + i;
+                }
+
+                if (i == 4)
+                {
+                    boundaries++;
+                }
+                if (i == 6)
+                {
+                    sixes++;
+                }
+
+                if (i == -1)
+                {
+                    // ViewBag.secondInningsBatsmenScore[wickets] = batsmanScore;
+                    <div class="alert alert-danger">Over: @(Ballcounter / 6).@(Ballcounter % 6) . @ViewBag.secondInningsBattingTeam.Players[strikerIndex].Name faces @currentBowler .  WICKET!!!. @ViewBag.secondInningsBattingTeam.Players[strikerIndex].Name scored @ViewBag.secondInningsBatsmenScore[strikerIndex].score runs</div>
+                    wickets++;
+                    if (wickets <= 9)
+                    {
+                        strikerIndex = wickets + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (sum > ViewBag.target)
+                {
+                    break;
+                }
+
+                if (i == 1 || i == 3)
+                {
+                    int temp = strikerIndex;
+                    strikerIndex = nonStrikerIndex;
+                    nonStrikerIndex = temp;
+                }
+
+                if (Ballcounter % 6 == 0)
+                {
+                    int tempBallcounter = strikerIndex;
+                    strikerIndex = nonStrikerIndex;
+                    nonStrikerIndex = tempBallcounter;
+
+                    overNumber = (Ballcounter / 6);
+                    currentBowler = ((GameController)this.ViewContext.Controller).getCurrentBowler(overNumber, (GameModel)ViewBag.secondInningsGameModel);
+                }
+                Ballcounter++;
+
+            }
+            @*if (wickets <= 9)
+            {
+                <div>@ViewBag.secondInningsBattingTeam.Players[strikerIndex].Name scored @ViewBag.secondInningsBatsmenScore[strikerIndex].score runs</div>
+            }*@
+
+            <br /><br />
+            if (sum > ViewBag.target)
+            {
+                <div class="alert alert-success">MI won by @(10 - wickets) wickets</div>
+            }
+            else
+            {
+                <div class="alert alert-success">CSK won by @(ViewBag.target - sum) runs</div>
+            }      
+
+            <br />
+            <table class="alert alert-warning">
+                <tr>
+                    <th style="padding-left:15px">Batsman</th>
+                    <th>Score</th>
+                </tr>
+                @for (int k = 0; k < @ViewBag.secondInningsBatsmenScore.Length && k <= (wickets + 1); k++)
+                {
+                    <tr><td style="padding-left:15px">@ViewBag.secondInningsBattingTeam.Players[k].Name </td> <td>@ViewBag.secondInningsBatsmenScore[k].score (@ViewBag.secondInningsBatsmenScore[k].balls)</td></tr>
+                }
+                <tr></tr>
+                <tr><td style="padding-left:15px">Total:</td> <td><p style="font-size:large"><b>@sum/@wickets</b></p></td></tr>
+                <tr><td style="padding-left:15px">Fours: </td> <td>@boundaries</td></tr>
+                <tr><td style="padding-left:15px">Sixes: </td> <td>@sixes </td></tr>
+            </table>
+            <br />
+            <table class="alert alert-warning">
+                <tr>
+                    <th style="padding-left:15px">Bowler</th>
+                    <th>Figures</th>
+                </tr>
+                @for (int z = 0; z < @ViewBag.secondInningsBowlerScore.Length; z++)
+                {
+                    if (@ViewBag.secondInningsBowlerScore[z].runs > 0)
+                    {
+                    <tr> <td style="padding-left:15px">@ViewBag.secondInningsBowlerScore[z].Name </td>  <td>@ViewBag.secondInningsBowlerScore[z].Overs - @ViewBag.secondInningsBowlerScore[z].runs - @ViewBag.secondInningsBowlerScore[z].wickets </td></tr>
+                    }
+                }             
+            </table>
+
+            
+       }
+    </div>
+
+</body>
+</html>

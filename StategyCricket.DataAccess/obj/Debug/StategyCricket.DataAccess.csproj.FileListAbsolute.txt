@@ -1,0 +1,10 @@
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\StategyCricket.DataAccess.dll.config
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\StategyCricket.DataAccess.dll
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\StategyCricket.DataAccess.pdb
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\EntityFramework.dll
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\EntityFramework.xml
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\obj\Debug\StategyCricket.DataAccess.dll
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\obj\Debug\StategyCricket.DataAccess.pdb
+E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\obj\Debug\StategyCricket.DataAccess.csprojResolveAssemblyReference.cache
