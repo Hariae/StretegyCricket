@@ -18,7 +18,8 @@ namespace StrategyCricket.Models
         public int BattingAttribute { get; set; }
         public int BowlingAttribute { get; set; }
         public bool IsWicketKeeper { get; set; }
-        public List<int> BowlingOvers { get; set; }       
+        public List<int> BowlingOvers { get; set; }     
+        public string Team { get; set; }
     }
 
     public class TeamModel

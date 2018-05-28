@@ -27,7 +27,7 @@ namespace StrategyCricket.Business
             int wickets = 0, sum = 0;
             int strikerIndex = 0, nonStrikerIndex = 1;
             const int WICKETSDOWN = 1;
-            for (int i = 0, j = 1; (i < gameSet.Length && wickets < 10 && sum < target); i++, j++)
+            for (int i = 0, j = 1; (i < gameSet.Length && wickets < 10 && sum <= target); i++, j++)
             {
                 if (gameSet[i] == -1)
                 {
@@ -216,7 +216,20 @@ namespace StrategyCricket.Business
             return gameSet;
         }
 
-
+       
+            public int[] Shuffle(int[] array)
+            {
+                int n = array.Length;
+                while (n > 1)
+                {
+                    int k = new Random().Next(n--);
+                    int temp = array[n];
+                    array[n] = array[k];
+                    array[k] = temp;
+                }
+                return array;
+            }
+        
 
         public int SimulateBall(int battingAttribute, int bowlingAttribute)
         {
@@ -229,6 +242,9 @@ namespace StrategyCricket.Business
             for (int j = battingAttribute; j < battingAttribute + bowlingAttribute; j++)
                 probabilityPicker[j] = 0;
 
+            //randomize
+            probabilityPicker = Shuffle(probabilityPicker);
+            
             //Batsmen or Bowler picker 
             int batsmanOrBowlerPicker = probabilityPicker[RandomNumber(probabilityPicker.Length)];
             int score = 0;
@@ -250,8 +266,9 @@ namespace StrategyCricket.Business
 
             const int PROPORTION_SIX = 10;
             const int PROPORTION_FOUR = 20;
-            const int PROPORTION_DOUBLE = 20;
-            const int PROPORTION_SINGLE = 50;
+            const int PROPORTION_TRIPLE = 5;
+            const int PROPORTION_DOUBLE = 40;
+            const int PROPORTION_SINGLE = 25;
             int threshold = 0;
 
             //Fill each segment
@@ -264,6 +281,11 @@ namespace StrategyCricket.Business
             for (int i = threshold; i < threshold + fourThreshold; i++)
                 probabilityPicker[i] = 4;
             threshold = threshold + fourThreshold;
+
+            int tripleThreshold = (battingAttribute * PROPORTION_TRIPLE) / 100;
+            for (int i = threshold; i < threshold + tripleThreshold; i++)
+                probabilityPicker[i] = 3;
+            threshold = threshold + tripleThreshold;
 
             int doubleThreshold = (battingAttribute * PROPORTION_DOUBLE) / 100;
             for (int i = threshold; i < threshold + doubleThreshold; i++)
@@ -279,6 +301,10 @@ namespace StrategyCricket.Business
             for (int i = threshold; i < battingAttribute; i++)
                 probabilityPicker[i] = 1;
 
+            //randomize
+            probabilityPicker = Shuffle(probabilityPicker);
+
+
             //pick the winner run
             int randomizedIndex = RandomNumber(probabilityPicker.Length);
 
@@ -291,9 +317,9 @@ namespace StrategyCricket.Business
 
             //Threshold segments for bowler
             const int PROPORTION_WICKET = 15;
-            const int PROPORTION_DOT = 25;
+            const int PROPORTION_DOT = 20;
             const int PROPORTION_SINGLE = 50;
-            const int PROPORTION_DOUBLE = 10;
+            const int PROPORTION_DOUBLE = 15;
             int threshold = 0;
 
             //Fill each segment
@@ -320,6 +346,10 @@ namespace StrategyCricket.Business
             //fill remaining array
             for (int i = threshold; i < bowlingAttribute; i++)
                 probabilityPicker[i] = 2;
+
+
+            //randomize
+            probabilityPicker = Shuffle(probabilityPicker);
 
             int randomizedIndex = RandomNumber(probabilityPicker.Length);
             return probabilityPicker[randomizedIndex];

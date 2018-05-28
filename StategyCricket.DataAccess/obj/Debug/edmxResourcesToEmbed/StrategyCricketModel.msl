@@ -24,8 +24,8 @@
     <EntitySetMapping Name="PlayersDatas">
       <EntityTypeMapping TypeName="StrategyCricketModel.PlayersData">
         <MappingFragment StoreEntitySet="PlayersData">
-          <ScalarProperty Name="MatchesBowled" ColumnName="MatchesBowled" />
-          <ScalarProperty Name="MatchesBatted" ColumnName="MatchesBatted" />
+          <ScalarProperty Name="BowlingInnings" ColumnName="BowlingInnings" />
+          <ScalarProperty Name="BattingInnings" ColumnName="BattingInnings" />
           <ScalarProperty Name="BestBowling" ColumnName="BestBowling" />
           <ScalarProperty Name="HighestScore" ColumnName="HighestScore" />
           <ScalarProperty Name="Overs" ColumnName="Overs" />

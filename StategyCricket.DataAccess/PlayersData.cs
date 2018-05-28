@@ -21,7 +21,7 @@ namespace StategyCricket.DataAccess
         public Nullable<int> Overs { get; set; }
         public Nullable<int> HighestScore { get; set; }
         public string BestBowling { get; set; }
-        public Nullable<int> MatchesBatted { get; set; }
-        public Nullable<int> MatchesBowled { get; set; }
+        public Nullable<int> BattingInnings { get; set; }
+        public Nullable<int> BowlingInnings { get; set; }
     }
 }

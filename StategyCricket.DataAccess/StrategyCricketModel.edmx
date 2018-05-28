@@ -27,8 +27,8 @@
           <Property Name="Overs" Type="int" />
           <Property Name="HighestScore" Type="int" />
           <Property Name="BestBowling" Type="nvarchar" MaxLength="50" />
-          <Property Name="MatchesBatted" Type="int" />
-          <Property Name="MatchesBowled" Type="int" />
+          <Property Name="BattingInnings" Type="int" />
+          <Property Name="BowlingInnings" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'StrategyCricket.dbo.Teams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -87,8 +87,8 @@ warning 6002: The table/view 'StrategyCricket.dbo.Teams' does not have a primary
           <Property Name="Overs" Type="Int32" />
           <Property Name="HighestScore" Type="Int32" />
           <Property Name="BestBowling" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MatchesBatted" Type="Int32" />
-          <Property Name="MatchesBowled" Type="Int32" />
+          <Property Name="BattingInnings" Type="Int32" />
+          <Property Name="BowlingInnings" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -119,8 +119,8 @@ warning 6002: The table/view 'StrategyCricket.dbo.Teams' does not have a primary
           <EntitySetMapping Name="PlayersDatas">
             <EntityTypeMapping TypeName="StrategyCricketModel.PlayersData">
               <MappingFragment StoreEntitySet="PlayersData">
-                <ScalarProperty Name="MatchesBowled" ColumnName="MatchesBowled" />
-                <ScalarProperty Name="MatchesBatted" ColumnName="MatchesBatted" />
+                <ScalarProperty Name="BowlingInnings" ColumnName="BowlingInnings" />
+                <ScalarProperty Name="BattingInnings" ColumnName="BattingInnings" />
                 <ScalarProperty Name="BestBowling" ColumnName="BestBowling" />
                 <ScalarProperty Name="HighestScore" ColumnName="HighestScore" />
                 <ScalarProperty Name="Overs" ColumnName="Overs" />

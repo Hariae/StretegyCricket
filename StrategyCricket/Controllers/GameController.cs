@@ -69,22 +69,31 @@ namespace StrategyCricket.Controllers
                 teamSelectionViewModel.FirstTeam = teamSelectionViewModel.SecondTeam;
                 teamSelectionViewModel.SecondTeam = tempTeamName;
 
-                var order = new List<int> { 3, 2, 1, 0, 4, 6, 5, 7, 8, 9, 11 };
-                teamSelectionViewModel.FirstTeamPlayers = order.Select(i => teamSelectionViewModel.FirstTeamPlayers[i]).ToList();
+                ////var order = new List<int> { 3, 2, 1, 0, 4, 6, 5, 7, 8, 9, 11 };
+                ////teamSelectionViewModel.FirstTeamPlayers = order.Select(i => teamSelectionViewModel.FirstTeamPlayers[i]).ToList();
+                teamSelectionViewModel.FirstTeamPlayers =  teamSelectionViewModel.FirstTeamPlayers.OrderByDescending(x => x.BattingAttribute).ToList();
+                //make the bets batsman to ONE down
+                var tempBatsman = teamSelectionViewModel.FirstTeamPlayers[0];
+                teamSelectionViewModel.FirstTeamPlayers[0] = teamSelectionViewModel.FirstTeamPlayers[2];
+                teamSelectionViewModel.FirstTeamPlayers[2] = tempBatsman;
 
+                teamSelectionViewModel.SecondTeamPlayers = teamSelectionViewModel.SecondTeamPlayers.OrderByDescending(x => x.BattingAttribute).ToList();
+                tempBatsman = teamSelectionViewModel.SecondTeamPlayers[0];
+                teamSelectionViewModel.SecondTeamPlayers[0] = teamSelectionViewModel.SecondTeamPlayers[2];
+                teamSelectionViewModel.SecondTeamPlayers[2] = tempBatsman;
 
-                order = new List<int> { 1, 2, 3, 0, 4, 5, 6, 7, 8, 9, 10 };
-                teamSelectionViewModel.SecondTeamPlayers = order.Select(i => teamSelectionViewModel.SecondTeamPlayers[i]).ToList();
+                //order = new List<int> { 1, 2, 3, 0, 4, 5, 6, 7, 8, 9, 10 };
+                //teamSelectionViewModel.SecondTeamPlayers = order.Select(i => teamSelectionViewModel.SecondTeamPlayers[i]).ToList();
             }
-            else
-            {
-                var order = new List<int> { 1, 2, 3, 0, 4, 5, 6, 7, 8, 9, 10 };
-                teamSelectionViewModel.FirstTeamPlayers = order.Select(i => teamSelectionViewModel.FirstTeamPlayers[i]).ToList();
+            //else
+            //{
+            //    var order = new List<int> { 1, 2, 3, 0, 4, 5, 6, 7, 8, 9, 10 };
+            //    teamSelectionViewModel.FirstTeamPlayers = order.Select(i => teamSelectionViewModel.FirstTeamPlayers[i]).ToList();
 
 
-                order = new List<int> { 3, 2, 1, 0, 4, 6, 5, 7, 8, 9, 11 };
-                teamSelectionViewModel.SecondTeamPlayers = order.Select(i => teamSelectionViewModel.SecondTeamPlayers[i]).ToList();
-            }
+            //    order = new List<int> { 3, 2, 1, 0, 4, 6, 5, 7, 8, 9, 11 };
+            //    teamSelectionViewModel.SecondTeamPlayers = order.Select(i => teamSelectionViewModel.SecondTeamPlayers[i]).ToList();
+            //}
             
 
 
@@ -230,6 +239,7 @@ namespace StrategyCricket.Controllers
                 playerModel = new PlayerModel();
                 playerModel.ID = player.ID;
                 playerModel.Name = player.Name;
+                playerModel.Team = player.Team;
                 playerModel.BattingAttribute = player.BattingAttribute;
                 playerModel.BowlingAttribute = player.BowlingAttribute;
                 playerModel.BowlingOvers = new List<int>();
@@ -251,6 +261,7 @@ namespace StrategyCricket.Controllers
                 playerModel = new PlayerModel();
                 playerModel.ID = player.ID;
                 playerModel.Name = player.Name;
+                playerModel.Team = player.Team;
                 playerModel.BattingAttribute = player.BattingAttribute;
                 playerModel.BowlingAttribute = player.BowlingAttribute;
                 playerModel.BowlingOvers = new List<int>();
@@ -387,7 +398,7 @@ namespace StrategyCricket.Controllers
                     }                        
                     else
                         batsmanData.HighestScore = batsmenScoreModel[k].score;
-                    batsmanData.MatchesBatted = batsmanData.MatchesBatted + 1;          
+                    batsmanData.BattingInnings = batsmanData.BattingInnings + 1;          
                     model.SaveChanges();
 
                 }
@@ -421,7 +432,7 @@ namespace StrategyCricket.Controllers
                             bowlerData.BestBowling = bowlerScoreModel[i].runs + "/" + bowlerScoreModel[i].wickets;
                         }
 
-                        bowlerData.MatchesBowled = bowlerData.MatchesBowled + 1;
+                        bowlerData.BowlingInnings = bowlerData.BowlingInnings + 1;
                         model.SaveChanges();
                     }
                 }

@@ -14,116 +14,148 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
+
     <script type="text/javascript">
-        $(function () {
-            $('.listbox').multiselect({
-                includeSelectAllOption: true
-            });
-        });
+        //$(function () {
+        //    $('.listbox').multiselect({
+        //        includeSelectAllOption: true
+        //    });
+        //});
+      
+
     </script>
     <style>
-        .custom-listbox{
+        /*.custom-listbox{
             width:250px;
             height: 250px !important;                       
-        }
+        }*/
+
+       
+
         select option {               
             padding-bottom: 5px;
             font-size: 16px;
             font-weight: bold;
             font-family: cursive;
         }
+
+        .mar-top-10{
+            margin-top: 10px;
+        }
+        .mar-left-35{
+            margin-left: 35%;
+        }
+        .mar-right-25{
+           margin-right: 25%;
+        }
     </style>
 </head>
 <body>
     <div class="page-header">
-        <h1>Example Page Header</h1>
+        <h1>Team Selection</h1>
     </div>
 
 
-@if(Model.Teams != null)
+@if (Model.Teams != null)
 {
 
-
-   using (Html.BeginForm("TeamSelectionGetPlayers", "Game", FormMethod.Post))
-   {
-
-   
-    <div>
-        <div style="float:left;width:50%;background-color:antiquewhite">
-            
-
-                @Html.DropDownListFor(x=> x.FirstTeam, Model.Teams.Select(x => new SelectListItem(){Text = x.Team1.ToString()}), "Select a team");
-            
-        </div>
-
-        <div>
-            
-            @Html.DropDownListFor(x => x.SecondTeam, Model.Teams.Select(x => new SelectListItem() { Text = x.Team1.ToString() }), "Select a team");
-           
-
-        </div>
-        <button type="submit"> Submit</button>
-    </div>
-
-   }
-}
-
-    @if (Model.FirstTeamPlayers != null || Model.SecondTeamPlayers != null)
-    {
-        <div>
-        @using (Html.BeginForm("SaveTeamPlayers", "Game", FormMethod.Post))
+        using (Html.BeginForm("TeamSelectionGetPlayers", "Game", FormMethod.Post))
         {
-            <div style="float:left;width:50%;background-color:antiquewhite">
-               
-                    
-                    @Html.Label("Players:");
-                    <br />
-                    <br />
-                    @Html.ListBoxFor(m => m.FirstTeamSelectedPlayers, Model.FirstTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = true }), new { @class = "listbox custom-listbox" })
-                    <br /> 
-                
-                    <div>                       
-                        @for (int i = 0; i < 20; i++)
-                        {
-                            @Html.Label("Over:" + (i+1));
-                            <br />
-                            <br />
-                            @Html.ListBoxFor(m => m.FirstTeamBowlingLineup, Model.FirstTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), new { @class = "custom-listbox" })
-                            <br />
-                        }
-                        
-                    </div>
-                                                   
+
+
+        <div>
+            <div style="float:left;width:50%;margin-left:10px">
+
+
+                @Html.DropDownListFor(x => x.FirstTeam, Model.Teams.Select(x => new SelectListItem() { Text = x.Team1.ToString() }), "Select a team",
+                                                                    new { @class = "selectpicker" })
+
             </div>
 
-            <div style="background-color:antiquewhite">                                  
-                    @Html.Label("Players:");
-                    <br />
-                    <br />
-                    @Html.ListBoxFor(m => m.SecondTeamSelectedPlayers, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = true }), new { @class = "listbox custom-listbox" })
-                    <br />
-                    
+            <div>
+
+                @Html.DropDownListFor(x => x.SecondTeam, Model.Teams.Select(x => new SelectListItem() { Text = x.Team1.ToString() }), "Select a team",
+                                                                    new { @class = "selectpicker" })
+
+
+            </div>
+            <br />
+            <br />
+            <div class="mar-top-10 mar-left-35">
+                <button class="btn-success btn-lg" type="submit"> Submit</button>
+            </div>
+        </div>
+    
+
+}
+}
+    
+    @if (Model.FirstTeamPlayers != null || Model.SecondTeamPlayers != null)
+    {
+        <div class="container">
+            <div>
+                @using (Html.BeginForm("SaveTeamPlayers", "Game", FormMethod.Post))
+        {
+            <div style="float:left;width:50%;">
+
+
+                @Html.Label("Players:");
+                <br />
+                <br />
+                @Html.ListBoxFor(m => m.FirstTeamSelectedPlayers, Model.FirstTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = true }), new { @class = "listbox custom-listbox selectpicker" })
+                <br />
+
+                <div>
+                    @for (int i = 0; i < 20; i++)
+                        {
+                        <br />
+                        @Html.Label("Over:" + (i+1));
+                        <br />
+                        @Html.DropDownListFor(m => m.FirstTeamBowlingLineup, Model.FirstTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), "Select a Bowler", new { @class = "selectpicker" })
+                        <br />
+                        }
+
+                </div>
+
+            </div>
+
+            <div>
+                @Html.Label("Players:");
+                <br />
+                <br />
+                @Html.ListBoxFor(m => m.SecondTeamSelectedPlayers, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = true }), new { @class = "listbox custom-listbox selectpicker" })
+                <br />
+
                 <div>
                     @for (int j = 0; j < 20; j++)
                     {
-                        @Html.Label("Over:" + (j + 1));
-                        <br />
-                        <br />
-                        @Html.ListBoxFor(m => m.SecondTeamBowlingLineup, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), new { @class = "custom-listbox" })
-                        <br />
+                    <br />
+                    @Html.Label("Over:" + (j + 1));
+                    <br />
+                    @Html.DropDownListFor(m => m.SecondTeamBowlingLineup, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), "Select a Bowler", new { @class = "selectpicker" })
+                    <br />
+
                     }
                 </div>
-                                                  
+
             </div>
 
-            <div class="form-group text-center">
+            <div class="form-group text-center mar-top-10 mar-right-25">
                 <input type="submit" class="btn btn-primary" value="Submit" />
             </div>
         }
-        </div>
+            </div>
+            </div>
+            }
 
-    }
-   
 </body>
 
 

@@ -34,7 +34,7 @@
     <Property Name="Overs" Type="Int32" />
     <Property Name="HighestScore" Type="Int32" />
     <Property Name="BestBowling" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="MatchesBatted" Type="Int32" />
-    <Property Name="MatchesBowled" Type="Int32" />
+    <Property Name="BattingInnings" Type="Int32" />
+    <Property Name="BowlingInnings" Type="Int32" />
   </EntityType>
 </Schema>
