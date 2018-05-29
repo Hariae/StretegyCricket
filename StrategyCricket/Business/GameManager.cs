@@ -177,7 +177,8 @@ namespace StrategyCricket.Business
                     }
                 }
 
-                currentBallScore = SimulateBall(currentBatsmanAttribute, currentBowlerAttribute);
+                //SimulateBall with battingAttribute, bowlingAttribute and Ball Number
+                currentBallScore = SimulateBall(currentBatsmanAttribute, currentBowlerAttribute, i);
 
                 if (currentBallScore == -1)
                 {
@@ -231,7 +232,7 @@ namespace StrategyCricket.Business
             }
         
 
-        public int SimulateBall(int battingAttribute, int bowlingAttribute)
+        public int SimulateBall(int battingAttribute, int bowlingAttribute, int ballCount)
         {
             int[] probabilityPicker = new int[battingAttribute + bowlingAttribute];
 
@@ -250,25 +251,49 @@ namespace StrategyCricket.Business
             int score = 0;
             //Batting or Bowler probe
             if (batsmanOrBowlerPicker == 1)
-                score = ProbeBattingAttribute(battingAttribute);
+                score = ProbeBattingAttribute(battingAttribute, ballCount);
             else
-                score = ProbeBowlingAttribute(bowlingAttribute);
+                score = ProbeBowlingAttribute(bowlingAttribute, ballCount);
 
             return score;
             //return probabilityPicker[RandomNumber(probabilityPicker.Length)];
         }
 
-        public int ProbeBattingAttribute(int battingAttribute)
+        public int ProbeBattingAttribute(int battingAttribute, int ballCount)
         {
             int[] probabilityPicker = new int[battingAttribute];
 
             //Fix threshold for 4 types of runs
 
-            const int PROPORTION_SIX = 10;
-            const int PROPORTION_FOUR = 20;
-            const int PROPORTION_TRIPLE = 5;
-            const int PROPORTION_DOUBLE = 40;
-            const int PROPORTION_SINGLE = 25;
+
+
+            //Overs 7-15
+
+            int PROPORTION_SIX = 5;
+            int PROPORTION_FOUR = 10;
+            int PROPORTION_TRIPLE = 5;
+            int PROPORTION_DOUBLE = 30;
+            int PROPORTION_SINGLE = 50;
+
+            //Overs 1-6
+            if (ballCount <= 36)
+            {
+                PROPORTION_SIX = 15;
+                PROPORTION_FOUR = 30;
+                PROPORTION_TRIPLE = 5;
+                PROPORTION_DOUBLE = 30;
+                PROPORTION_SINGLE = 20;
+            }
+            //Overs 16-20
+            else if (ballCount > 96)
+            {
+                PROPORTION_SIX = 20;
+                PROPORTION_FOUR = 20;
+                PROPORTION_TRIPLE = 5;
+                PROPORTION_DOUBLE = 25;
+                PROPORTION_SINGLE = 20;
+            }
+
             int threshold = 0;
 
             //Fill each segment
@@ -311,15 +336,36 @@ namespace StrategyCricket.Business
             return probabilityPicker[randomizedIndex];
         }
 
-        public int ProbeBowlingAttribute(int bowlingAttribute)
+        public int ProbeBowlingAttribute(int bowlingAttribute, int ballCount)
         {
             int[] probabilityPicker = new int[bowlingAttribute];
 
             //Threshold segments for bowler
-            const int PROPORTION_WICKET = 15;
-            const int PROPORTION_DOT = 20;
-            const int PROPORTION_SINGLE = 50;
-            const int PROPORTION_DOUBLE = 15;
+
+
+            //Overs 7-15
+            int PROPORTION_WICKET = 15;
+            int PROPORTION_DOT = 25;
+            int PROPORTION_SINGLE = 50;
+            int PROPORTION_DOUBLE = 10;
+
+            //Overs 1-6
+            if(ballCount <= 36)
+            {
+                PROPORTION_WICKET = 10;
+                PROPORTION_DOT = 25;
+                PROPORTION_SINGLE = 50;
+                PROPORTION_DOUBLE = 15;
+            }
+            //Overs 16-20
+            else if (ballCount > 96)
+            {
+                PROPORTION_WICKET = 25;
+                PROPORTION_DOT = 15;
+                PROPORTION_SINGLE = 35;
+                PROPORTION_DOUBLE = 25;
+            }
+
             int threshold = 0;
 
             //Fill each segment

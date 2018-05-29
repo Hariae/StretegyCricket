@@ -140,7 +140,7 @@
                     <br />
                     @Html.Label("Over:" + (j + 1));
                     <br />
-                    @Html.DropDownListFor(m => m.SecondTeamBowlingLineup, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false }), "Select a Bowler", new { @class = "selectpicker" })
+                    @Html.DropDownListFor(m => m.SecondTeamBowlingLineup, Model.SecondTeamPlayers.Select(x => new SelectListItem() { Text = x.Name.ToString(), Value = x.ID.ToString(), Selected = false}), "Select a Bowler", new { @class = "selectpicker" })
                     <br />
 
                     }

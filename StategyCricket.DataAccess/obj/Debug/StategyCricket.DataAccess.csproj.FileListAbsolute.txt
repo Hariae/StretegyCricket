@@ -7,4 +7,3 @@ E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\EntityFramework.x
 E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\obj\Debug\StategyCricket.DataAccess.dll
 E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\obj\Debug\StategyCricket.DataAccess.pdb
-E:\Arivoli\StrategyCricket\StategyCricket.DataAccess\obj\Debug\StategyCricket.DataAccess.csprojResolveAssemblyReference.cache
